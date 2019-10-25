@@ -15,6 +15,7 @@ public:
 	RBNode<keyType, valueType> * FindKey(keyType key);
 	RBNode<keyType, valueType> * FindInsertPos(keyType key);
 	RBNode<keyType, valueType> * FindDeletePos(keyType key);
+	RBNode<keyType, valueType> * hasFindDeletePos(keyType key);  //leftNodeNumber,rightNodeNumber update
 	void InsertKey(keyType key, valueType v);
 	void InsertAdjust(RBNode<keyType, valueType> * cur_node);
 	void left_rotate(RBNode<keyType, valueType> * x);
@@ -146,6 +147,27 @@ RBNode<keyType, valueType> * RBTree<keyType, valueType>::FindDeletePos(keyType k
 }
 
 template <class keyType, class valueType>
+RBNode<keyType, valueType> * RBTree<keyType, valueType>::hasFindDeletePos(keyType key) {
+	RBNode<keyType, valueType> * pNode = root;
+
+	while (pNode != NIL) {
+		if (pNode->key < key) {
+			pNode->rightNodeNumber -= 1;
+			pNode = pNode->right;
+		}
+		else if (pNode->key > key) {
+			pNode->leftNodeNumber -= 1;
+			pNode = pNode->left;
+		}
+		else {
+			return pNode;
+		}
+	}
+
+	return NIL;
+}
+
+template <class keyType, class valueType>
 void RBTree<keyType, valueType>::InsertKey(keyType key, valueType v) {
 
 	RBNode<keyType, valueType> * pNode = FindInsertPos(key);
@@ -227,8 +249,9 @@ void RBTree<keyType, valueType>::left_rotate(RBNode<keyType, valueType> * x) { /
 	RBNode<keyType, valueType> * yleft = y->left;
 
 	x->rightNodeNumber = yleft->leftNodeNumber + yleft->rightNodeNumber;
-	y->leftNodeNumber = x->leftNodeNumber + x->rightNodeNumber+1;
 	if (yleft != NIL) x->rightNodeNumber++;
+	y->leftNodeNumber = x->leftNodeNumber + x->rightNodeNumber+1;
+
 
 	y->p = xp;
 	if (xp->left == x) {
@@ -317,7 +340,9 @@ RBNode<keyType, valueType> * RBTree<keyType, valueType>::FindSuccessor(RBNode<ke
 	assert(z->right != NIL);
 
 	RBNode<keyType, valueType> * p = z->right;
+	z->rightNodeNumber -= 1;
 	while (p->left != NIL) {
+		p->leftNodeNumber -= 1;
 		p = p->left;
 	}
 	return p;
@@ -327,6 +352,7 @@ template <class keyType, class valueType>
 void RBTree<keyType, valueType>::DeleteKey(keyType key) {
 	RBNode<keyType, valueType> * z = FindDeletePos(key);
 	if (z == NIL) return;
+	z = hasFindDeletePos(key);
 	treeSize -= 1;
 	RBNode<keyType, valueType> * y = NIL;
 	if (z->left == NIL || z->right == NIL) {
@@ -335,6 +361,9 @@ void RBTree<keyType, valueType>::DeleteKey(keyType key) {
 	else {
 		y = FindSuccessor(z);
 		swap(y->key, z->key);
+		swap(y->val, z->val);
+		swap(y->leftNodeNumber, z->leftNodeNumber);
+		swap(y->rightNodeNumber, z->rightNodeNumber);
 	}
 
 	RBNode<keyType, valueType> * yp = y->p;

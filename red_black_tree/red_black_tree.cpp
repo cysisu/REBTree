@@ -88,9 +88,20 @@ int main()
 	cout << "\n后序遍历:" << endl;
 	tree1.postorder();
 	printf("\n20的rank：%d\n", tree1.rank(20));
-	int pos = 0;
-	printf("请输入select的位置:");
+	
+	/*while (true) {
+		int pos = 0;
+		printf("请输入select的位置:");
+		cin >> pos;
+		cout << "select key:" << tree1.select(pos) << endl;
+	}*/
 	while (true) {
+		cout << "请输入需要删除的key:";
+		int key;
+		cin >> key;
+		tree1.DeleteKey(key);
+		int pos = 0;
+		printf("请输入select的位置:");
 		cin >> pos;
 		cout << "select key:" << tree1.select(pos) << endl;
 	}
