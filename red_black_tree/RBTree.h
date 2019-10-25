@@ -35,6 +35,8 @@ public:
 	void postorder(RBNode<keyType, valueType> * pNode);
 	void postorder();
 	int rank(keyType k);
+	keyType select(int pos);
+	RBNode<keyType, valueType> *findSelectNode(int pos);
 };
 
 
@@ -505,6 +507,48 @@ int RBTree<keyType, valueType>::rank(keyType k)
 		node = node->right;
 	}
 	return rankNumber;
+}
+
+
+template <class keyType, class valueType>
+keyType RBTree<keyType, valueType>::select(int pos)
+{
+	RBNode<keyType, valueType> *pNode = findSelectNode(pos);
+	if (pNode == NULL)
+		return NULL;
+	else
+		return pNode->key;
+}
+
+template <class keyType, class valueType>
+RBNode<keyType, valueType> *RBTree<keyType, valueType>::findSelectNode(int pos)
+{
+	if (root == NIL)
+		return NULL;
+	RBNode<keyType, valueType> *pNode = root;
+	int serialNumber = pNode->leftNodeNumber + 1;
+	
+	while (pNode != NIL)
+	{
+		if (serialNumber > pos)
+		{
+			pNode = pNode->left;
+			if (pNode == NIL)
+				return NULL;
+			serialNumber -= (pNode->rightNodeNumber + 1);
+		}
+		else if (serialNumber < pos)
+		{
+			pNode = pNode->right;
+			if (pNode == NIL)
+				return NULL;
+			serialNumber += pNode->leftNodeNumber+1;
+		}
+		else {
+			return pNode;
+		}
+	}
+
 }
 
 

@@ -88,6 +88,12 @@ int main()
 	cout << "\n后序遍历:" << endl;
 	tree1.postorder();
 	printf("\n20的rank：%d\n", tree1.rank(20));
+	int pos = 0;
+	printf("请输入select的位置:");
+	while (true) {
+		cin >> pos;
+		cout << "select key:" << tree1.select(pos) << endl;
+	}
 
 	return 0;
 }
