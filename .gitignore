@@ -3,3 +3,8 @@
 ################################################################################
 
 /Debug/red_black_tree.ilk
+/.vs/red_black_tree/v14/.suo
+*.ipch
+*.pdb
+/red_black_tree.VC.db
+/red_black_tree.VC.VC.opendb
