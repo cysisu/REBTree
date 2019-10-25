@@ -97,17 +97,21 @@ RBNode<keyType, valueType> * RBTree<keyType, valueType>::FindInsertPos(keyType k
 	while (pNode != NIL) {
 		if (pNode->key < key) {
 			if (pNode->right == NIL) {
+				pNode->rightNodeNumber++;
 				return pNode;
 			}
 			else {
+				pNode->rightNodeNumber++;
 				pNode = pNode->right;
 			}
 		}
 		else if (pNode->key > key) {
+			pNode->leftNodeNumber++;
 			if (pNode->left == NIL) {
 				return pNode;
 			}
 			else {
+				pNode->leftNodeNumber++;
 				pNode = pNode->left;
 			}
 		}
@@ -159,6 +163,7 @@ void RBTree<keyType, valueType>::InsertKey(keyType key, valueType v) {
 		pNode->left = new_node;
 		new_node->p = pNode;
 	}
+
 
 	InsertAdjust(new_node);
 }
@@ -219,6 +224,10 @@ void RBTree<keyType, valueType>::left_rotate(RBNode<keyType, valueType> * x) { /
 	RBNode<keyType, valueType> * xp = x->p;
 	RBNode<keyType, valueType> * yleft = y->left;
 
+	x->rightNodeNumber = yleft->leftNodeNumber + yleft->rightNodeNumber;
+	y->leftNodeNumber = x->leftNodeNumber + x->rightNodeNumber+1;
+	if (yleft != NIL) x->rightNodeNumber++;
+
 	y->p = xp;
 	if (xp->left == x) {
 		xp->left = y;
@@ -244,6 +253,10 @@ void RBTree<keyType, valueType>::right_rotate(RBNode<keyType, valueType> * x) { 
 	RBNode<keyType, valueType> * xp = x->p;
 	RBNode<keyType, valueType> * yright = y->right;
 
+	x->leftNodeNumber = yright->leftNodeNumber + yright->rightNodeNumber;
+	y->rightNodeNumber = x->leftNodeNumber + x->rightNodeNumber+1;
+	if (yright != NIL) y->leftNodeNumber++;
+
 	y->p = xp;
 	if (xp->left == x) {
 		xp->left = y;
@@ -256,6 +269,8 @@ void RBTree<keyType, valueType>::right_rotate(RBNode<keyType, valueType> * x) { 
 	x->p = y;
 	x->left = yright;
 	yright->p = x;
+
+	
 
 	if (root == x) {
 		root = y;
