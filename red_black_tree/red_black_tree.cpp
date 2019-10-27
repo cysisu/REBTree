@@ -75,7 +75,9 @@ int main()
 
 	int K[5] = { 10,20,30,40,34};
 	string V[5] = { "cy","alber","Alin","Tom","Mei" };
-	RBTree<int, string> tree1(K, V, 5);
+	RBTree<int, string> tree2(K, V, 5);
+	RBTree<int, string> tree1 = tree2;
+	//RBTree<int, string> tree1(tree2);
 	tree1.Output();
 	cout << endl;
 	string *valuePointer = tree1.search(20);
@@ -95,16 +97,17 @@ int main()
 		cin >> pos;
 		cout << "select key:" << tree1.select(pos) << endl;
 	}*/
-	while (true) {
-		cout << "请输入需要删除的key:";
-		int key;
-		cin >> key;
-		tree1.DeleteKey(key);
-		int pos = 0;
-		printf("请输入select的位置:");
-		cin >> pos;
-		cout << "select key:" << tree1.select(pos) << endl;
-	}
+	//while (true) {
+	//	cout << "请输入需要删除的key:";
+	//	int key;
+	//	cin >> key;
+	//	tree1.DeleteKey(key);
+	//	int pos = 0;
+	//	printf("请输入select的位置:");
+	//	cin >> pos;
+	//	cout << "select key:" << tree1.select(pos) << endl;
+	//}
+	
 
 	return 0;
 }

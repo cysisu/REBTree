@@ -11,6 +11,8 @@ private:
 public:
 	RBTree();
 	RBTree(keyType K[], valueType V[], int s);
+	RBTree<keyType, valueType> operator=(const RBTree<keyType, valueType> &tree1);  //shallow copy
+	RBTree(const RBTree<keyType, valueType> &tree1);  //shallow copy constructor
 	~RBTree();
 	RBNode<keyType, valueType> * FindKey(keyType key);
 	RBNode<keyType, valueType> * FindInsertPos(keyType key);
@@ -67,6 +69,24 @@ RBTree<keyType, valueType>::RBTree(keyType K[], valueType V[], int s)
 	{
 		InsertKey(K[i], V[i]);
 	}
+}
+template <class keyType, class valueType>
+RBTree<keyType, valueType> RBTree<keyType, valueType>::operator=(const RBTree<keyType, valueType> &tree1)
+{
+	treeSize = tree1.treeSize;
+	NIL = tree1.NIL;
+
+	this->root = tree1.root;
+	return this;
+}
+
+template <class keyType, class valueType>
+RBTree<keyType, valueType>::RBTree(const RBTree<keyType, valueType> &tree1)
+{
+	treeSize = tree1.treeSize;
+	NIL = tree1.NIL;
+
+	this->root = tree1.root;
 }
 
 template <class keyType, class valueType>
