@@ -18,7 +18,7 @@ public:
 	RBNode<keyType, valueType> * FindInsertPos(keyType key);
 	RBNode<keyType, valueType> * FindDeletePos(keyType key);
 	RBNode<keyType, valueType> * hasFindDeletePos(keyType key);  //leftNodeNumber,rightNodeNumber update
-	void InsertKey(keyType key, valueType v);
+	void insert(keyType key, valueType v);
 	void InsertAdjust(RBNode<keyType, valueType> * cur_node);
 	void left_rotate(RBNode<keyType, valueType> * x);
 	void right_rotate(RBNode<keyType, valueType> * x);
@@ -27,7 +27,7 @@ public:
 	void Clear(RBNode<keyType, valueType> * pNode);
 	void Clear();
 	RBNode<keyType, valueType> * FindSuccessor(RBNode<keyType, valueType> * z);
-	void DeleteKey(keyType key);
+	int remove(keyType key);
 	void DeleteAdjust(RBNode<keyType, valueType> *cur_node);
 	valueType * search(keyType k);
 	int size();
@@ -67,7 +67,7 @@ RBTree<keyType, valueType>::RBTree(keyType K[], valueType V[], int s)
 
 	for (int i = 0; i < s; i++)
 	{
-		InsertKey(K[i], V[i]);
+		insert(K[i], V[i]);
 	}
 }
 template <class keyType, class valueType>
@@ -188,7 +188,7 @@ RBNode<keyType, valueType> * RBTree<keyType, valueType>::hasFindDeletePos(keyTyp
 }
 
 template <class keyType, class valueType>
-void RBTree<keyType, valueType>::InsertKey(keyType key, valueType v) {
+void RBTree<keyType, valueType>::insert(keyType key, valueType v) {
 
 	RBNode<keyType, valueType> * pNode = FindInsertPos(key);
 	if (root != NIL && pNode == NIL) {
@@ -369,9 +369,9 @@ RBNode<keyType, valueType> * RBTree<keyType, valueType>::FindSuccessor(RBNode<ke
 }
 
 template <class keyType, class valueType>
-void RBTree<keyType, valueType>::DeleteKey(keyType key) {
+int RBTree<keyType, valueType>::remove(keyType key) {
 	RBNode<keyType, valueType> * z = FindDeletePos(key);
-	if (z == NIL) return;
+	if (z == NIL) return 0;
 	z = hasFindDeletePos(key);
 	treeSize -= 1;
 	RBNode<keyType, valueType> * y = NIL;
@@ -405,6 +405,7 @@ void RBTree<keyType, valueType>::DeleteKey(keyType key) {
 		DeleteAdjust(ychild);
 
 	delete y;
+	return 1;
 }
 
 template <class keyType, class valueType>

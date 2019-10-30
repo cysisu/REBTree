@@ -39,7 +39,7 @@ int main()
 	//		int key;
 	//		cout << "please input the key you want to insert:";
 	//		cin >> key;
-	//		tree.InsertKey(key,"cy");
+	//		tree.insert(key,"cy");
 	//		tree.Output();
 	//	}
 	//	else if (operate == 2)
@@ -47,7 +47,7 @@ int main()
 	//		int key;
 	//		cout << "please input the key you want to delete:";
 	//		cin >> key;
-	//		tree.DeleteKey(key);
+	//		tree.remove(key);
 	//		tree.Output();
 	//	}
 	//	else if (operate == 3)
@@ -101,7 +101,7 @@ int main()
 	//	cout << "请输入需要删除的key:";
 	//	int key;
 	//	cin >> key;
-	//	tree1.DeleteKey(key);
+	//	tree1.remove(key);
 	//	int pos = 0;
 	//	printf("请输入select的位置:");
 	//	cin >> pos;
